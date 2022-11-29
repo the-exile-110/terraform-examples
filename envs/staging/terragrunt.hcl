@@ -24,7 +24,7 @@ remote_state {
     profile = local.env_vars.remote_state_aws_profile
     bucket  = local.env_vars.remote_state_bucket
     key     = "${local.env_name}/${path_relative_to_include()}.tfstate"
-    region  = local.env_vars.region
+    region  = local.env_vars.aws_region
     encrypt = true
   }
 }
@@ -35,7 +35,7 @@ generate "provider" {
   contents  = <<EOF
     provider "aws" {
       profile = "${local.env_vars.aws_profile}"
-      region = "${local.env_vars.region}"
+      region = "${local.env_vars.aws_region}"
       default_tags {
         tags = {
           Environment = "${local.env_name}"
