@@ -1,0 +1,36 @@
+eks:
+  # cluster
+  cluster_name: example-staging-eks
+  cluster_version: 1.24
+  cluster_endpoint_private_access: true
+  cluster_endpoint_public_access: true
+  k8s_provider_api_version: client.authentication.k8s.io/v1
+  # kms
+  create_kms_key: true
+  kms_key_deletion_window_in_days: 7
+  enable_kms_key_rotation: true
+  # managed node group default
+  ami_type: AL2_x86_64
+  attach_cluster_primary_security_group: true
+  create_security_group: false
+  # managed node group
+  capacity_type: SPOT
+  instance_types: [ c3.large ]
+  min_size: 1
+  max_size: 1
+  desired_size: 1
+  pre_bootstrap_user_data: |
+    #!/bin/bash
+    echo pre_bootstrap_user_data
+  # aws-auth
+  aws_auth_accounts: [ ]
+  aws_auth_users:
+    - userarn: arn:aws:iam::1234567890:user/example
+      username: example
+      groups:
+        - system:masters
+  aws_auth_roles:
+    - rolearn: arn:aws:iam::1234567890:role/example
+      username: example
+      groups:
+        - system:masters

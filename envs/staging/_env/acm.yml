@@ -1,0 +1,10 @@
+acm:
+  test_cert:
+    domain_name: "staging.example.com"
+    validation_method: "DNS"
+    subject_alternative_names:
+      - "www.staging.example.com"
+      - "api.staging.example.com"
+      - "staging.example.com"
+    tags:
+      test: "true"

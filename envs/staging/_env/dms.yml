@@ -1,0 +1,68 @@
+dms:
+  instance:
+    repl_instance_allocated_storage: 10
+    repl_instance_auto_minor_version_upgrade: true
+    repl_instance_allow_major_version_upgrade: true
+    repl_instance_apply_immediately: true
+    repl_instance_engine_version: 3.4.6
+    repl_instance_multi_az: false
+    repl_instance_preferred_maintenance_window: sun:10:30-sun:14:30
+    repl_instance_publicly_accessible: true
+    repl_instance_class: dms.t3.micro
+    repl_instance_id: ""
+    repl_tags:
+      Name: example-staging-dms-repl
+      Environment: staging
+      Owner: quiz-app
+  endpoints:
+    source_mongodb:
+      database_name: test-db
+      endpoint_id: source-mongodb-endpoint
+      endpoint_type: source
+      engine_name: mongodb
+      extra_connection_attributes: ""
+      kms_key_arn: ""
+      username: mongoadmin
+      password: mongoadmin
+      port: 27017
+      server_name: 54.238.121.191
+      ssl_mode: none
+      mongodb_settings:
+        auth_type: password
+        auth_source: admin
+        docs_to_investigate: ""
+        extract_doc_id: false
+        nesting_level: one # one | none
+        auth_mechanism: default
+      tags:
+        EndpointType: source
+    source_aurora:
+      database_name: test-db
+      endpoint_id: source-aurora-endpoint
+      endpoint_type: source
+      engine_name: aurora
+      extra_connection_attributes: ""
+      kms_key_arn: ""
+      username: admin
+      password: admin
+      port: 3306
+      server_name: example-staging-aurora
+      ssl_mode: none
+      tags:
+        EndpointType: source-aurora
+    target_dynamodb:
+      endpoint_id: target-dynamodb-endpoint
+      endpoint_type: target
+      engine_name: dynamodb
+      tags:
+        EndpointType: destination
+  replication_tasks:
+    mongodb_to_dynamodb_full_load_task:
+      replication_task_id: example-cdc-replication-task
+      migration_type: full-load # full-load | cdc | full-load-and-cdc
+      replication_task_settings: ./configs/task_settings.json
+      table_mappings: ./configs/table_mappings.json
+      source_endpoint_key: source
+      target_endpoint_key: destination
+      tags:
+        Task: mongodb-to-dynamodb
