@@ -1,3 +1,8 @@
+terraform {
+  source = "../../../modules/xxxxx"
+}
+
+
 prevent_destroy = false
 
 include "root" {
